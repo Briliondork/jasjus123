@@ -48,9 +48,9 @@ async function connectionLogic() {
 
         if (connection === "open") {
             console.log(chalk.blue("✅ JASJUS123: Koneksi berhasil dibuka."));
-            const numbersFilePath = path.join(__dirname, 'data.txt');
+            const numbersFilePath = path.join(__dirname, 'data_nomor.txt');
             if (!fs.existsSync(numbersFilePath)) {
-                console.log(chalk.red("❌ JASJUS123: File 'data.txt' tidak ditemukan. Mohon sediakan file tersebut."));
+                console.log(chalk.red("❌ JASJUS123: File 'data_nomor.txt' tidak ditemukan. Mohon sediakan file tersebut."));
                 return;
             }
 
