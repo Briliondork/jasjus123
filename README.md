@@ -24,8 +24,8 @@
    npm install @whiskeysockets/baileys pino chalk
    ```
 
-5. **Buat File `data.txt`**:
-   - Buat file teks bernama `data.txt` di folder yang sama dengan file JavaScript Anda.
+5. **Buat File `data_nomor.txt`**:
+   - Buat file teks bernama `data_nomor.txt` di folder yang sama dengan file JavaScript Anda.
    - Masukkan nomor WhatsApp yang ingin Anda cek, satu nomor per baris, seperti ini:
      ```
      628123456789
