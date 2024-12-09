@@ -59,10 +59,22 @@ async function connectionLogic() {
             let totalExists = 0;
             let totalNotExists = 0;
 
+            // Pastikan folder 'result' ada, jika tidak, buat folder tersebut
+            const resultFolder = path.join(__dirname, 'result');
+            if (!fs.existsSync(resultFolder)) {
+                fs.mkdirSync(resultFolder, { recursive: true });
+            }
+
+            // Clear the CSV files before writing new results
+            const registeredFilePath = path.join(resultFolder, 'hasil_terdaftar.csv');
+            const notRegisteredFilePath = path.join(resultFolder, 'hasil_tidak_terdaftar.csv');
+            fs.writeFileSync(registeredFilePath, "Nomor,Status\n");
+            fs.writeFileSync(notRegisteredFilePath, "Nomor,Status\n");
+
             for (const number of numbersToCheck) {
                 if (number.trim()) {
                     totalChecked++;
-                    const exists = await checkNumberOnWhatsApp(sock, number.trim());
+                    const exists = await checkNumberOnWhatsApp(sock, number.trim(), registeredFilePath, notRegisteredFilePath);
                     if (exists) totalExists++;
                     else totalNotExists++;
                 }
@@ -71,7 +83,7 @@ async function connectionLogic() {
             console.log(chalk.green(`✅ JASJUS123: Pemindaian selesai. Total ${totalChecked} nomor diproses.`));
             console.log(chalk.green(`   - ${totalExists} nomor terdaftar di WhatsApp.`));
             console.log(chalk.green(`   - ${totalNotExists} nomor TIDAK terdaftar di WhatsApp.`));
-            console.log(chalk.green("📁 JASJUS123: Hasil pemindaian disimpan di file 'Hasil_Scan.csv'."));
+            console.log(chalk.green("📁 JASJUS123: Hasil pemindaian disimpan di file 'terdaftarr_whatsapp.csv' dan 'tidak_terdaftar_whatsapp.csv'."));
         }
     });
 
@@ -79,20 +91,19 @@ async function connectionLogic() {
 }
 
 // Fungsi untuk memeriksa apakah nomor terdaftar di WhatsApp
-async function checkNumberOnWhatsApp(sock, id) {
+async function checkNumberOnWhatsApp(sock, id, registeredFilePath, notRegisteredFilePath) {
     const [result] = await sock.onWhatsApp(id);
-    const csvFilePath = path.join(__dirname, 'Hasil_Scan.csv');
     let logMessage = '';
 
     if (result?.exists) {
         console.log(chalk.green(`✅ JASJUS123: ${id} terdaftar di WhatsApp.`));
-        logMessage = `${id},Terdaftar di WhatsApp,\n`;
-        fs.appendFileSync(csvFilePath, logMessage);
+        logMessage = `${id},Terdaftar di WhatsApp\n`;
+        fs.appendFileSync(registeredFilePath, logMessage);
         return true;
     } else {
         console.log(chalk.red(`❌ JASJUS123: ${id} TIDAK terdaftar di WhatsApp.`));
-        logMessage = `${id},Tidak terdaftar di WhatsApp,\n`;
-        fs.appendFileSync(csvFilePath, logMessage);
+        logMessage = `${id},Tidak terdaftar di WhatsApp\n`;
+        fs.appendFileSync(notRegisteredFilePath, logMessage);
         return false;
     }
 }
