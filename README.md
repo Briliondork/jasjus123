@@ -32,10 +32,10 @@
 
 6. **Mulai Pemindaian Nomor**: Untuk menjalankan program dan mulai memindai nomor-nomor WhatsApp, jalankan perintah berikut di terminal (pastikan Anda berada di folder `WATOOLS`):
     ```
-    node tools.js start
+    node jasjus123.js start
     ```
 
 7. **Hapus Data Autentikasi**: Jika Anda ingin menghapus data autentikasi atau keluar dari sesi WhatsApp, jalankan perintah ini:
     ```
-    node tools.js delete
+    node jasjus123.js delete
     ```
