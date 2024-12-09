@@ -3,7 +3,10 @@
 ### Langkah Installasi dan Pengaturan:
 
 1. **Buka Command Prompt (atau PowerShell)** di komputer Anda.
-
+Pastikan sudah terinstal GIT dan NODE JS 
+   ```
+git clone https://github.com/Briliondork/jasjus123.git
+    ```
 2. **Buat Folder Proyek Baru**: Jalankan perintah berikut untuk membuat folder proyek dan masuk ke dalamnya:
     ```
     mkdir WATOOLS
